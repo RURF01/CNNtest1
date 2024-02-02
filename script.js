@@ -1,3 +1,6 @@
+
+
+
 let model;
 let canvas;
 let ctx;
@@ -5,8 +8,9 @@ let drawing = false;
 
 // Función para cargar el modelo
 async function loadModel() {
-    model = await tf.loadLayersModel('https://github.com/RURF01/CNNtest1/raw/main/model.json');
-    console.log("Modelo cargado.");
+    // Cambié la URL del modelo a la que proporcionaste en tu código
+    model = await tf.loadLayersModel('https://github.com/RURF01/CNNtest1/raw/main/numeros_conv/model.json');
+    console.log("Modelo cargado correctamente.");
 }
 
 function startDrawing(event) {
@@ -42,12 +46,12 @@ function preprocessCanvas(image) {
     return tensor.div(255.0);
 }
 
-function predict() {
+async function predict() {
     let tensor = preprocessCanvas(canvas);
-    model.predict(tensor).data().then(prediction => {
-        let results = Array.from(prediction);
-        displayResult(results);
-    });
+    // Cambié el método para esperar la promesa de predict
+    const prediction = await model.predict(tensor).data();
+    let results = Array.from(prediction);
+    displayResult(results);
 }
 
 function displayResult(results) {
@@ -55,7 +59,7 @@ function displayResult(results) {
     document.getElementById('prediction').innerText = maxIndex;
 }
 
-window.onload = function() {
+window.onload = function () {
     loadModel();
 
     canvas = document.getElementById('canvas');
@@ -67,7 +71,7 @@ window.onload = function() {
 
     canvas.addEventListener('touchstart', startDrawing);
     canvas.addEventListener('touchend', stopDrawing);
-    canvas.addEventListener('touchmove', function(event) {
+    canvas.addEventListener('touchmove', function (event) {
         let touch = event.touches[0];
         let mouseEvent = new MouseEvent("mousemove", {
             clientX: touch.clientX,
@@ -77,4 +81,4 @@ window.onload = function() {
     }, false);
 
     document.getElementById('predict-button').addEventListener('click', predict);
-}
+};
