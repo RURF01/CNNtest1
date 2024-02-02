@@ -77,4 +77,4 @@ window.onload = function() {
     }, false);
 
     document.getElementById('predict-button').addEventListener('click', predict);
-}
+};
