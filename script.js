@@ -5,7 +5,7 @@ let drawing = false;
 
 // Función para cargar el modelo
 async function loadModel() {
-    model = await tf.loadLayersModel('https://github.com/RURF01/CNNtest1/raw/main/model.json');
+    model = await tf.loadLayersModel('https://raw.githubusercontent.com/RURF01/CNNtest1/main/script.js.json');
     console.log("Modelo cargado.");
 }
 
